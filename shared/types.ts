@@ -34,6 +34,5 @@ export interface ApiError {
 
 export interface AppConfig {
   siteName: string;
-  tagline: string;
   theme: 'dark' | 'light';
 }

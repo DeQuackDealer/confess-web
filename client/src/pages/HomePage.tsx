@@ -39,9 +39,8 @@ export function HomePage() {
     <PageContainer>
       <div className="mb-8 animate-fade-in text-center">
         <h1 className="bg-gradient-to-br from-white to-slate-400 bg-clip-text text-3xl font-bold tracking-tight text-transparent sm:text-4xl [html.light_&]:from-slate-900 [html.light_&]:to-slate-500">
-          RileysCrush
+          Rileys Crush Thingy
         </h1>
-        <p className="mt-2 text-sm text-slate-400">«Turning impossibly large integers into art.»</p>
       </div>
 
       <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">

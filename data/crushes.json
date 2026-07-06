@@ -1,16 +1,1 @@
-[
-  {
-    "id": 1,
-    "name": "Canonical Tupper Constant",
-    "integer": "960939379918958884971672962127852754715004339660129306651505519271702802395266424689642842174350718121267153782770623355993237280874144307891325963941337723487857735749823926629715517173716995165232890538221612403238855866184013235585136048828693337902491454229288667081096184496091705183454067827731551705405381627380967602565625016981482083418783163849115590225610003652351370343874461848378737238198224849863465033159410054974700593138339226497249461751545728366702369745461014655997933798537483143786841806593422227898388722980000748404719",
-    "message": "You found the number that draws its own formula. 🪄\n\nThat's the trick of this whole site: paste the right integer, and something that looks like noise turns out to hold a picture — or, sometimes, a note like this one.\n\nSomewhere in this app is another number. Riley picked it on purpose.",
-    "created": "2026-07-06"
-  },
-  {
-    "id": 2,
-    "name": "Riley's Confession (edit me)",
-    "integer": "15372429086533530013527750424359191612181060186661101655500564205259823970411180108072530456589603262677105133177126471644843884912461857056120325855475383578183053566064610512075747911072751197597232891455963471221903684075338357195425332466335420897754344361362378733974645309260029683857454317870835999388767109333671877338823710591915393024",
-    "message": "Hi. If you're reading this, you pasted the number I gave you into RileysCrush — so first: thank you for actually trying it. 💜\n\nI drew a little heart, one pixel at a time, and this absurdly long integer is what it turns into when you run it through Tupper's formula. It's silly and it's math-nerd overkill, but I wanted to say something true in a way you couldn't Google.\n\nI like you. I've liked you for a while now, and I wasn't sure how to say it without it feeling like *just* another message — so I built you a whole number instead.\n\nNo pressure at all. But if you want to talk about it, you know where to find me.\n\n— Riley",
-    "created": "2026-07-06"
-  }
-]
+[]

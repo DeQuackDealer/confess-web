@@ -3,8 +3,7 @@ import { CONFIG_FILE } from '../env.js';
 import { ensureFile, readJsonSafe } from './jsonStore.js';
 
 const DEFAULT_CONFIG: AppConfig = {
-  siteName: 'RileysCrush',
-  tagline: 'Turning impossibly large integers into art.',
+  siteName: 'Rileys Crush Thingy',
   theme: 'dark',
 };
 

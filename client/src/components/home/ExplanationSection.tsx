@@ -19,7 +19,7 @@ export function ExplanationSection() {
         formula can be made to plot an image of itself, or of anything else.
       </p>
       <p>
-        RileysCrush lets you go both directions: paste a huge integer to see the picture hidden
+        Rileys Crush Thingy lets you go both directions: paste a huge integer to see the picture hidden
         inside it, or draw a picture in <strong>Bitmap Studio</strong> to get the integer that
         produces it.
       </p>

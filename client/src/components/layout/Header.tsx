@@ -12,12 +12,12 @@ export function Header() {
   return (
     <header className="sticky top-0 z-40 border-b border-white/5 bg-surface/70 backdrop-blur-xl [html.light_&]:border-black/5 [html.light_&]:bg-surface-light/70">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 sm:px-6">
-        <NavLink to="/" className="flex items-center gap-2">
+        <div className="flex items-center gap-2">
           <span className="grid h-8 w-8 place-items-center rounded-lg bg-gradient-to-br from-accent-purple to-accent-blue text-sm font-bold text-white shadow-glow-purple">
             R
           </span>
-          <span className="text-base font-semibold tracking-tight">RileysCrush</span>
-        </NavLink>
+          <span className="text-base font-semibold tracking-tight">Rileys Crush Thingy</span>
+        </div>
 
         <nav className="flex items-center gap-1">
           <NavLink to="/" end className={navLinkClass}>
