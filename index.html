@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Who's Riley's Crush?</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💜</text></svg>"
+    />
+    <style>
+      :root {
+        color-scheme: dark;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        height: 100%;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+        font-family:
+          -apple-system,
+          BlinkMacSystemFont,
+          'Segoe UI',
+          Inter,
+          Roboto,
+          sans-serif;
+        color: #f1f0f6;
+        background: #0b0c14;
+        background-image:
+          radial-gradient(60% 50% at 20% 10%, rgba(155, 107, 255, 0.28), transparent 60%),
+          radial-gradient(55% 45% at 85% 15%, rgba(91, 124, 255, 0.24), transparent 60%),
+          radial-gradient(60% 50% at 50% 100%, rgba(155, 107, 255, 0.18), transparent 60%);
+        background-attachment: fixed;
+      }
+
+      .stage {
+        width: 100%;
+        max-width: 480px;
+      }
+
+      .card {
+        background: rgba(255, 255, 255, 0.04);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 24px;
+        padding: 40px 32px;
+        text-align: center;
+        box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
+        animation: fade-in 0.5s ease-out both;
+      }
+
+      h1 {
+        margin: 0 0 6px;
+        font-size: 1.6rem;
+        font-weight: 700;
+        letter-spacing: -0.01em;
+      }
+
+      .hint {
+        margin: 0 0 28px;
+        color: #a3a2b3;
+        font-size: 0.95rem;
+      }
+
+      .options {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+
+      .option {
+        appearance: none;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        background: rgba(255, 255, 255, 0.05);
+        color: #f1f0f6;
+        font-size: 1rem;
+        font-weight: 600;
+        padding: 18px 12px;
+        border-radius: 14px;
+        cursor: pointer;
+        transition:
+          transform 0.15s ease,
+          background 0.15s ease,
+          border-color 0.15s ease;
+      }
+
+      .option:hover {
+        background: rgba(155, 107, 255, 0.18);
+        border-color: rgba(155, 107, 255, 0.5);
+        transform: translateY(-2px);
+      }
+
+      .option:active {
+        transform: translateY(0);
+      }
+
+      .result-text {
+        font-size: 1.25rem;
+        font-weight: 600;
+        line-height: 1.5;
+        margin: 0;
+      }
+
+      .card.correct {
+        background: linear-gradient(160deg, rgba(155, 107, 255, 0.22), rgba(91, 124, 255, 0.14));
+        border-color: rgba(155, 107, 255, 0.5);
+      }
+
+      .card.wrong .result-text {
+        color: #e2e1ea;
+      }
+
+      .hidden {
+        display: none;
+      }
+
+      @keyframes fade-in {
+        from {
+          opacity: 0;
+          transform: translateY(6px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="stage">
+      <div id="question" class="card">
+        <h1>Who's Riley's Crush? 👀</h1>
+        <p class="hint">Pick one...</p>
+        <div class="options">
+          <button class="option" data-name="Annie">Annie</button>
+          <button class="option" data-name="Clare">Clare</button>
+          <button class="option" data-name="Lucy">Lucy</button>
+          <button class="option" data-name="Other">Other</button>
+        </div>
+      </div>
+
+      <div id="result" class="card hidden">
+        <p id="result-text" class="result-text"></p>
+      </div>
+    </div>
+
+    <script>
+      const CORRECT_NAME = 'Annie';
+      const REDIRECT_DELAY_MS = 1600;
+
+      const questionEl = document.getElementById('question');
+      const resultEl = document.getElementById('result');
+      const resultTextEl = document.getElementById('result-text');
+
+      document.querySelectorAll('.option').forEach((button) => {
+        button.addEventListener('click', () => {
+          const guess = button.dataset.name;
+          const isCorrect = guess === CORRECT_NAME;
+
+          questionEl.classList.add('hidden');
+          resultEl.classList.remove('hidden');
+          resultEl.classList.toggle('correct', isCorrect);
+          resultEl.classList.toggle('wrong', !isCorrect);
+          resultTextEl.textContent = isCorrect
+            ? "Yup, you're Riley's crush, hehe 💜"
+            : 'Nup, try again.';
+
+          if (!isCorrect) {
+            setTimeout(() => {
+              window.location.href = window.location.pathname + window.location.search;
+            }, REDIRECT_DELAY_MS);
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
