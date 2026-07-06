@@ -160,6 +160,27 @@ Serves the whole app (API + built client) on `http://localhost:4000`.
 `./data` is bind-mounted into the container so `crushes.json`/`config.json`
 persist across rebuilds.
 
+## Running on Google Colab
+
+For a quick, zero-local-setup way to run RileysCrush and get a shareable
+public link (e.g. to hand your crush the confession without deploying
+anywhere), open [`colab/RileysCrush_Colab.ipynb`](colab/RileysCrush_Colab.ipynb)
+in Google Colab. It installs Node.js, clones this repo, builds the client,
+starts the production server, and exposes it with
+[localtunnel](https://github.com/localtunnel/localtunnel) — the last cell
+prints a public `https://*.loca.lt` URL.
+
+Notes:
+
+- First-time visitors to a `.loca.lt` URL see a localtunnel interstitial
+  page — that's expected, not a bug; click through it.
+- The Colab VM's disk is wiped on runtime restart. Admin edits made during
+  the session are real, but won't survive a restart unless you either
+  download `data/crushes.json` afterwards or run the optional Google Drive
+  persistence cell in the notebook before starting the server.
+- Keep the Colab tab open (or at least the runtime connected) for as long
+  as you want the link to stay live.
+
 ## Deploying to Vercel
 
 ```bash
