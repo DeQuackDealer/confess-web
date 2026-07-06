@@ -170,6 +170,15 @@ vercel
 Express app via `api/index.ts` (a thin wrapper that re-exports the same app
 used by the standalone server).
 
+**Root Directory must be the repo root.** In the Vercel project's
+**Settings → General → Root Directory**, leave it blank (or `./`) — do not
+point it at `client/`. Vercel's import flow sometimes auto-guesses `client`
+as the root because that's where it finds `vite.config.ts`, but this repo's
+`api/`, `shared/`, and `server/` all need to be visible alongside `client/`
+for the build and the serverless function to resolve. If you see a build
+error like `npm error No workspaces found: --workspace=client`, that's this
+misconfiguration — fix the Root Directory setting and redeploy.
+
 **Important caveat**: Vercel's serverless functions have a read-only
 filesystem (aside from `/tmp`) and are ephemeral across invocations. That
 means writes made through the deployed `/admin` UI (creating/editing crush
