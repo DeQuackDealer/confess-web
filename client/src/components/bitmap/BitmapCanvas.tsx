@@ -40,7 +40,9 @@ export const BitmapCanvas = forwardRef<HTMLCanvasElement, BitmapCanvasProps>(fun
     for (let row = 0; row < BITMAP_HEIGHT; row++) {
       for (let col = 0; col < BITMAP_WIDTH; col++) {
         if (grid[row][col]) {
-          ctx.fillRect(col * pixelSize, row * pixelSize, pixelSize, pixelSize);
+          // Mirrored horizontally for display only — the grid/integer mapping itself is untouched.
+          const screenCol = BITMAP_WIDTH - 1 - col;
+          ctx.fillRect(screenCol * pixelSize, row * pixelSize, pixelSize, pixelSize);
         }
       }
     }
@@ -69,7 +71,8 @@ export const BitmapCanvas = forwardRef<HTMLCanvasElement, BitmapCanvasProps>(fun
     const rect = canvas.getBoundingClientRect();
     const relX = (e.clientX - rect.left) / rect.width;
     const relY = (e.clientY - rect.top) / rect.height;
-    const col = Math.floor(relX * BITMAP_WIDTH);
+    // Invert the same mirror used for drawing so the reported cell matches what's under the cursor.
+    const col = BITMAP_WIDTH - 1 - Math.floor(relX * BITMAP_WIDTH);
     const row = Math.floor(relY * BITMAP_HEIGHT);
     if (col >= 0 && col < BITMAP_WIDTH && row >= 0 && row < BITMAP_HEIGHT) {
       onHoverCell({ row, col });

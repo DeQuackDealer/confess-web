@@ -27,7 +27,9 @@ export function gridToCanvas(grid: BitGrid, scale = 8): HTMLCanvasElement {
   for (let row = 0; row < BITMAP_HEIGHT; row++) {
     for (let col = 0; col < BITMAP_WIDTH; col++) {
       if (grid[row][col]) {
-        ctx.fillRect(col * scale, row * scale, scale, scale);
+        // Mirrored horizontally to match the on-screen display.
+        const screenCol = BITMAP_WIDTH - 1 - col;
+        ctx.fillRect(screenCol * scale, row * scale, scale, scale);
       }
     }
   }
@@ -49,7 +51,9 @@ export function gridToSvgString(grid: BitGrid, cell = 8): string {
   for (let row = 0; row < BITMAP_HEIGHT; row++) {
     for (let col = 0; col < BITMAP_WIDTH; col++) {
       if (grid[row][col]) {
-        rects += `<rect x="${col * cell}" y="${row * cell}" width="${cell}" height="${cell}" fill="#e4defb"/>`;
+        // Mirrored horizontally to match the on-screen display.
+        const screenCol = BITMAP_WIDTH - 1 - col;
+        rects += `<rect x="${screenCol * cell}" y="${row * cell}" width="${cell}" height="${cell}" fill="#e4defb"/>`;
       }
     }
   }

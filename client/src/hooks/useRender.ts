@@ -2,18 +2,14 @@ import { useCallback, useRef, useState } from 'react';
 import type { RenderResponse } from '@shared/types';
 import { api, ApiError } from '../lib/api';
 
-const cache = new Map<string, RenderResponse>();
-const CACHE_LIMIT = 30;
-
-function cacheSet(key: string, value: RenderResponse) {
-  if (cache.has(key)) cache.delete(key);
-  cache.set(key, value);
-  if (cache.size > CACHE_LIMIT) {
-    const oldest = cache.keys().next().value;
-    if (oldest !== undefined) cache.delete(oldest);
-  }
-}
-
+/**
+ * Deliberately no client-side response cache here: the hidden-message
+ * lookup embedded in each response can change at any time via /admin, so
+ * every render always goes to the server for an authoritative answer
+ * rather than risking a stale "no message" result from an earlier render
+ * of the same integer. The server itself still caches the expensive,
+ * integer-invariant part (the bitmap + number formats).
+ */
 export function useRender() {
   const [result, setResult] = useState<RenderResponse | null>(null);
   const [loading, setLoading] = useState(false);
@@ -24,21 +20,12 @@ export function useRender() {
     const trimmed = integer.trim();
     const id = ++requestId.current;
     setError(null);
-
-    const cached = cache.get(trimmed);
-    if (cached) {
-      setResult(cached);
-      setLoading(false);
-      return cached;
-    }
-
     setLoading(true);
     // Avoid a flash of the spinner for fast renders.
     const minDelay = new Promise((resolve) => setTimeout(resolve, 180));
     try {
       const [data] = await Promise.all([api.render(trimmed), minDelay]);
       if (id !== requestId.current) return null;
-      cacheSet(trimmed, data);
       setResult(data);
       return data;
     } catch (err) {

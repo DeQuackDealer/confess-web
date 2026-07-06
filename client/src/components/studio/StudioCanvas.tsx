@@ -34,8 +34,11 @@ export function StudioCanvas({
     ctx.fillStyle = '#e6defc';
     for (let row = 0; row < BITMAP_HEIGHT; row++) {
       for (let col = 0; col < BITMAP_WIDTH; col++) {
-        if (grid[row][col])
-          ctx.fillRect(col * RENDER_SCALE, row * RENDER_SCALE, RENDER_SCALE, RENDER_SCALE);
+        if (grid[row][col]) {
+          // Mirrored horizontally for display only — see cellFromEvent for the matching inverse.
+          const screenCol = BITMAP_WIDTH - 1 - col;
+          ctx.fillRect(screenCol * RENDER_SCALE, row * RENDER_SCALE, RENDER_SCALE, RENDER_SCALE);
+        }
       }
     }
 
@@ -61,8 +64,10 @@ export function StudioCanvas({
     const rect = canvas.getBoundingClientRect();
     const relX = (e.clientX - rect.left) / rect.width;
     const relY = (e.clientY - rect.top) / rect.height;
-    const col = Math.min(BITMAP_WIDTH - 1, Math.max(0, Math.floor(relX * BITMAP_WIDTH)));
+    const screenCol = Math.min(BITMAP_WIDTH - 1, Math.max(0, Math.floor(relX * BITMAP_WIDTH)));
     const row = Math.min(BITMAP_HEIGHT - 1, Math.max(0, Math.floor(relY * BITMAP_HEIGHT)));
+    // Invert the same mirror used for drawing so clicking a pixel edits the one you see.
+    const col = BITMAP_WIDTH - 1 - screenCol;
     return { row, col };
   }, []);
 

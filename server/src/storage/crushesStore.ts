@@ -1,7 +1,22 @@
 import type { Crush, CrushInput } from '../../../shared/types.js';
-import { normalizeForComparison } from '../../../shared/tupper.js';
+import { normalizeForComparison, parseTupperInteger } from '../../../shared/tupper.js';
 import { CRUSHES_FILE } from '../env.js';
 import { ensureFile, readJsonSafe, writeJsonAtomic } from './jsonStore.js';
+
+/**
+ * Canonicalizes a stored integer the same way render/check requests are
+ * normalized (trim + strip leading zeros), so e.g. "007" saved from the
+ * admin form still matches a pasted "7". Falls back to a plain trim if the
+ * value somehow isn't a valid integer, rather than throwing here — format
+ * validation already happens at the route layer.
+ */
+function canonicalizeIntegerForStorage(raw: string): string {
+  try {
+    return parseTupperInteger(raw).normalized;
+  } catch {
+    return normalizeForComparison(raw);
+  }
+}
 
 const DEFAULT_CRUSHES: Crush[] = [];
 
@@ -24,8 +39,8 @@ export function getAllCrushes(): Crush[] {
 }
 
 export function findCrushByInteger(integer: string): Crush | undefined {
-  const target = normalizeForComparison(integer);
-  return load().find((c) => normalizeForComparison(c.integer) === target);
+  const target = canonicalizeIntegerForStorage(integer);
+  return load().find((c) => canonicalizeIntegerForStorage(c.integer) === target);
 }
 
 export function getCrushById(id: number): Crush | undefined {
@@ -38,7 +53,7 @@ export function createCrush(input: CrushInput): Crush {
   const crush: Crush = {
     id: nextId,
     name: input.name.trim(),
-    integer: normalizeForComparison(input.integer),
+    integer: canonicalizeIntegerForStorage(input.integer),
     message: input.message,
     created: input.created ?? new Date().toISOString().slice(0, 10),
   };
@@ -52,7 +67,7 @@ export function updateCrush(id: number, input: Partial<CrushInput>): Crush | und
   const existing = list.find((c) => c.id === id);
   if (!existing) return undefined;
   if (input.name !== undefined) existing.name = input.name.trim();
-  if (input.integer !== undefined) existing.integer = normalizeForComparison(input.integer);
+  if (input.integer !== undefined) existing.integer = canonicalizeIntegerForStorage(input.integer);
   if (input.message !== undefined) existing.message = input.message;
   if (input.created !== undefined) existing.created = input.created;
   persist();
@@ -76,7 +91,7 @@ export function importCrushes(entries: CrushInput[], mode: ImportMode): Crush[] 
     cache = entries.map((entry, i) => ({
       id: i + 1,
       name: entry.name.trim(),
-      integer: normalizeForComparison(entry.integer),
+      integer: canonicalizeIntegerForStorage(entry.integer),
       message: entry.message,
       created: entry.created ?? new Date().toISOString().slice(0, 10),
     }));
@@ -86,7 +101,7 @@ export function importCrushes(entries: CrushInput[], mode: ImportMode): Crush[] 
       list.push({
         id: nextId++,
         name: entry.name.trim(),
-        integer: normalizeForComparison(entry.integer),
+        integer: canonicalizeIntegerForStorage(entry.integer),
         message: entry.message,
         created: entry.created ?? new Date().toISOString().slice(0, 10),
       });

@@ -83,8 +83,7 @@ export function integerToGrid(n: bigint): BitGrid {
 
     for (let x = 0; x < BITMAP_WIDTH; x++) {
       const e = BigInt(17 * x + r);
-      const screenCol = BITMAP_WIDTH - 1 - x; // mirrored horizontally
-      gridRow[screenCol] = bitAt(q, e) === 1;
+      gridRow[x] = bitAt(q, e) === 1;
     }
   }
 
@@ -101,9 +100,8 @@ export function gridToInteger(grid: BitGrid): bigint {
   for (let screenRow = 0; screenRow < BITMAP_HEIGHT; screenRow++) {
     const j = BITMAP_HEIGHT - 1 - screenRow;
     const row = grid[screenRow]!;
-    for (let screenCol = 0; screenCol < BITMAP_WIDTH; screenCol++) {
-      if (row[screenCol]) {
-        const x = BITMAP_WIDTH - 1 - screenCol; // mirrored horizontally
+    for (let x = 0; x < BITMAP_WIDTH; x++) {
+      if (row[x]) {
         k |= 1n << BigInt(17 * x + j);
       }
     }
