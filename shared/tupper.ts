@@ -78,12 +78,13 @@ export function integerToGrid(n: bigint): BitGrid {
     const overflow = sum >= 17n;
     const q = overflow ? q1Low : q0Low;
     const r = Number(overflow ? sum - 17n : sum);
-    const screenRow = j; // j=0 (Tupper's bottom row) -> first row, j=16 -> last row
+    const screenRow = BITMAP_HEIGHT - 1 - j; // j=0 (bottom) -> last row; j=16 (top) -> first row
     const gridRow = grid[screenRow]!;
 
     for (let x = 0; x < BITMAP_WIDTH; x++) {
       const e = BigInt(17 * x + r);
-      gridRow[x] = bitAt(q, e) === 1;
+      const screenCol = BITMAP_WIDTH - 1 - x; // mirrored horizontally
+      gridRow[screenCol] = bitAt(q, e) === 1;
     }
   }
 
@@ -98,10 +99,11 @@ export function integerToGrid(n: bigint): BitGrid {
 export function gridToInteger(grid: BitGrid): bigint {
   let k = 0n;
   for (let screenRow = 0; screenRow < BITMAP_HEIGHT; screenRow++) {
-    const j = screenRow;
+    const j = BITMAP_HEIGHT - 1 - screenRow;
     const row = grid[screenRow]!;
-    for (let x = 0; x < BITMAP_WIDTH; x++) {
-      if (row[x]) {
+    for (let screenCol = 0; screenCol < BITMAP_WIDTH; screenCol++) {
+      if (row[screenCol]) {
+        const x = BITMAP_WIDTH - 1 - screenCol; // mirrored horizontally
         k |= 1n << BigInt(17 * x + j);
       }
     }

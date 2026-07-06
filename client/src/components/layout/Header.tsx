@@ -26,9 +26,6 @@ export function Header() {
           <NavLink to="/studio" className={navLinkClass}>
             Bitmap Studio
           </NavLink>
-          <NavLink to="/admin" className={navLinkClass}>
-            Admin
-          </NavLink>
           <button
             type="button"
             onClick={toggleTheme}
