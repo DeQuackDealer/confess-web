@@ -1,4 +1,4 @@
-import type { AppConfig } from '@shared/types';
+import type { AppConfig } from '../../../shared/types.js';
 import { CONFIG_FILE } from '../env.js';
 import { ensureFile, readJsonSafe } from './jsonStore.js';
 

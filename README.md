@@ -175,9 +175,17 @@ used by the standalone server).
 point it at `client/`. Vercel's import flow sometimes auto-guesses `client`
 as the root because that's where it finds `vite.config.ts`, but this repo's
 `api/`, `shared/`, and `server/` all need to be visible alongside `client/`
-for the build and the serverless function to resolve. If you see a build
-error like `npm error No workspaces found: --workspace=client`, that's this
-misconfiguration — fix the Root Directory setting and redeploy.
+for the build and the serverless function to resolve.
+
+The install/build commands (`npm install --prefix client` /
+`npm run build --prefix client`) are deliberately workspace-free — `client`
+builds standalone off its own `package.json`, so the build can't fail with
+`npm error No workspaces found`. If you still see that exact error after
+pulling this fix, it means **Settings → Build and Development Settings**
+has a manually-entered Install/Build Command (or Root Directory) saved in
+the dashboard — those override `vercel.json` and won't update just because
+the file changed. Clear the override there (toggle it back to "inherited
+from vercel.json") and redeploy.
 
 **Important caveat**: Vercel's serverless functions have a read-only
 filesystem (aside from `/tmp`) and are ephemeral across invocations. That

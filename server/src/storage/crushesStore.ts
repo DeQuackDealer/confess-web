@@ -1,5 +1,5 @@
-import type { Crush, CrushInput } from '@shared/types';
-import { normalizeForComparison } from '@shared/tupper';
+import type { Crush, CrushInput } from '../../../shared/types.js';
+import { normalizeForComparison } from '../../../shared/tupper.js';
 import { CRUSHES_FILE } from '../env.js';
 import { ensureFile, readJsonSafe, writeJsonAtomic } from './jsonStore.js';
 

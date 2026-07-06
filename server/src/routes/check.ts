@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { normalizeForComparison } from '@shared/tupper';
-import type { CheckResponse } from '@shared/types';
+import { normalizeForComparison } from '../../../shared/tupper.js';
+import type { CheckResponse } from '../../../shared/types.js';
 import { findCrushByInteger } from '../storage/crushesStore.js';
 import { asyncHandler, ApiValidationError } from '../middleware/errorHandler.js';
 

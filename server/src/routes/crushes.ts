@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import type { CrushInput } from '@shared/types';
-import { normalizeForComparison } from '@shared/tupper';
+import type { CrushInput } from '../../../shared/types.js';
+import { normalizeForComparison } from '../../../shared/tupper.js';
 import {
   createCrush,
   deleteCrush,

@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { formatInteger, integerToGrid, parseTupperInteger } from '@shared/tupper';
-import type { RenderResponse } from '@shared/types';
+import { formatInteger, integerToGrid, parseTupperInteger } from '../../../shared/tupper.js';
+import type { RenderResponse } from '../../../shared/types.js';
 import { findCrushByInteger } from '../storage/crushesStore.js';
 import { asyncHandler, ApiValidationError } from '../middleware/errorHandler.js';
 
