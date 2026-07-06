@@ -1,0 +1,113 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    color-scheme: dark;
+  }
+  html[class~='light'] {
+    color-scheme: light;
+  }
+  body {
+    @apply bg-surface text-slate-100;
+  }
+  html.light body {
+    @apply bg-surface-light text-slate-900;
+  }
+  ::selection {
+    @apply bg-accent-purple/40;
+  }
+}
+
+/* Dark-on-dark text utilities need remapping so they stay legible once the
+   light theme flips the page to a white background. Kept outside @layer so
+   Tailwind's @apply resolver doesn't treat these as conflicting redefinitions
+   of the utility classes they target. */
+html.light .text-slate-100 {
+  color: #0f172a;
+}
+html.light .text-slate-200 {
+  color: #1e293b;
+}
+html.light .text-slate-300 {
+  color: #334155;
+}
+html.light .text-slate-400 {
+  color: #475569;
+}
+
+@layer components {
+  .glass-panel {
+    @apply bg-white/[0.04] backdrop-blur-xl border border-white/10 rounded-2xl shadow-glass;
+  }
+  html.light .glass-panel {
+    @apply bg-white/70 border-black/5 shadow-none;
+  }
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2 text-sm font-medium
+      transition-all duration-150 select-none disabled:opacity-40 disabled:cursor-not-allowed
+      focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-purple/60;
+  }
+  .btn-primary {
+    @apply btn bg-gradient-to-br from-accent-purple to-accent-blue text-white shadow-glow-purple
+      hover:brightness-110 active:brightness-95;
+  }
+  .btn-secondary {
+    @apply btn bg-white/[0.06] text-slate-100 border border-white/10 hover:bg-white/[0.1];
+  }
+  html.light .btn-secondary {
+    @apply bg-black/[0.04] text-slate-800 border-black/10 hover:bg-black/[0.08];
+  }
+  .btn-ghost {
+    @apply btn bg-transparent text-slate-300 hover:bg-white/[0.06];
+  }
+  html.light .btn-ghost {
+    @apply text-slate-600 hover:bg-black/[0.05];
+  }
+  .btn-icon {
+    @apply btn h-9 w-9 p-0 bg-white/[0.06] border border-white/10 hover:bg-white/[0.1];
+  }
+  html.light .btn-icon {
+    @apply bg-black/[0.04] border-black/10 hover:bg-black/[0.08];
+  }
+  .input-field {
+    @apply w-full rounded-xl bg-black/30 border border-white/10 px-3 py-2 text-sm text-slate-100
+      placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-accent-purple/50 transition;
+  }
+  html.light .input-field {
+    @apply bg-white border-black/10 text-slate-900 placeholder:text-slate-400;
+  }
+  .chip {
+    @apply inline-flex items-center gap-1 rounded-full bg-white/[0.06] border border-white/10 px-2.5 py-1 text-xs text-slate-300;
+  }
+  html.light .chip {
+    @apply bg-black/5 border-black/10 text-slate-600;
+  }
+}
+
+/* Scrollbars */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(155, 107, 255, 0.4) transparent;
+}
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+*::-webkit-scrollbar-thumb {
+  background: rgba(155, 107, 255, 0.35);
+  border-radius: 999px;
+}
+
+.hidden-message-prose :where(p) {
+  margin-bottom: 0.85em;
+}
+.hidden-message-prose :where(a) {
+  color: #b79bff;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.hidden-message-prose :where(a):hover {
+  color: #d6c6ff;
+}
